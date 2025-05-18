@@ -57,7 +57,7 @@ export default function Home() {
                 </button>
               </Link>
               
-              <Link href="/test" className="transform hover:scale-105 transition duration-300">
+              <Link href="/Test" className="transform hover:scale-105 transition duration-300">
                 <button className="w-full py-4 px-6 rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white font-bold text-lg hover:from-red-700 hover:to-orange-700 shadow-lg shadow-red-500/30 mt-4">
                   Comenzar Test
                 </button>
