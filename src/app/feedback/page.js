@@ -1,55 +1,64 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import MovieCard from "@/components/MovieCard";
+import { useEffect, useState } from 'react';
+import MovieCard from '@/components/moviecard';
 
-// Simulación de API o lógica basada en preferencias
-const mockFetchRecommendedMovies = async (preferences) => {
-  // Simulación de respuesta
-  return [
-    {
-      title: "Inception",
-      poster: "/public/movie-discovery.png", // Reemplaza con URL real
-      genre: ["Sci-Fi", "Action"],
-    },
-    {
-      title: "Interstellar",
-      poster: "/public/movie-collage-bg.jpg",
-      genre: ["Sci-Fi", "Drama"],
-    },
-  ];
-};
+const IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
 export default function FeedbackPage() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState(null);
+  const [error,  setError]  = useState(null);
 
   useEffect(() => {
-    const preferences = JSON.parse(localStorage.getItem("userPreferences"));
-    if (!preferences) {
-      // Redirigir si no hay preferencias
-      window.location.href = "/signup";
+    // ——— Recuperar respuestas ———
+    const stored = localStorage.getItem('movieQuiz');
+    if (!stored) {
+      window.location.href = '/Test';
       return;
     }
 
-    mockFetchRecommendedMovies(preferences).then((data) => {
-      setMovies(data);
-      setLoading(false);
-    });
+    // ——— Llamar a nuestro endpoint backend ———
+    (async () => {
+      try {
+        const res = await fetch('/api/recommend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: stored,
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setMovies(data);
+      } catch (err) {
+        setError('No se pudieron obtener recomendaciones.');
+        console.error(err);
+      }
+    })();
   }, []);
+
+  // ——— Render ———
+  if (error)
+    return <p className="min-h-screen flex items-center justify-center text-red-600">{error}</p>;
+
+  if (!movies)
+    return <p className="min-h-screen flex items-center justify-center">Cargando…</p>;
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">
-      <h1 className="text-3xl font-bold mb-6">Tus películas recomendadas</h1>
-      {loading ? (
-        <p>Cargando recomendaciones...</p>
-      ) : (
-        <div className="flex flex-wrap gap-4">
-          {movies.map((movie, index) => (
-            <MovieCard key={index} movie={movie} />
-          ))}
-        </div>
-      )}
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">Tus películas recomendadas</h1>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {movies.map(m => (
+          <MovieCard
+            key={m.id}
+            movie={{
+              title:  m.title,
+              poster: m.poster_path ? `${IMAGE_BASE}${m.poster_path}` : '/fallback.jpg',
+              genre:  [],                 
+              year:   m.release_date?.slice(0,4),
+              rating: m.vote_average,
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }

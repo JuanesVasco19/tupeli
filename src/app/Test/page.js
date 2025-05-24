@@ -1,11 +1,13 @@
 'use client'
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Button, Radio, RadioGroup, FormControlLabel, FormControl, Typography, Box, Paper } from '@mui/material';
+import MovieCard from '@/components/moviecard';
 
 export default function Test() {
+  const router = useRouter();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState(Array(6).fill(''));
-  const [showResults, setShowResults] = useState(false);
 
   const questions = [
     {
@@ -44,7 +46,8 @@ export default function Test() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      setShowResults(true);
+      localStorage.setItem('movieQuiz', JSON.stringify(answers)); // persiste
+      router.push('/feedback');    
     }
   };
 
@@ -96,95 +99,63 @@ export default function Test() {
     },
   };
 
-  // Fondo degradado y centrado
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        minWidth: '100vw',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #232526 0%, #5f0a87 100%)',
-        overflow: 'auto',
-      }}
-    >
-      {showResults ? (
-        <Paper elevation={6} sx={paperSx}>
-          <Typography variant="h4" gutterBottom align="center" sx={{ fontWeight: 'bold', color: '#a4508b', letterSpacing: 1 }}>
-            Tus Preferencias
-          </Typography>
-          {questions.map((question, index) => (
-            <Box key={index} sx={{ mb: 2 }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#ff8c00' }}>
-                {question.question}
-              </Typography>
-              <Typography variant="body1" sx={{ ml: 2, color: '#232526', fontWeight: 500 }}>
-                {answers[index]}
-              </Typography>
-            </Box>
-          ))}
-          <Button 
-            variant="contained" 
-            onClick={() => {
-              setCurrentQuestion(0);
-              setAnswers(Array(6).fill(''));
-              setShowResults(false);
-            }}
-            sx={{ ...buttonSx, mt: 2, width: '100%' }}
+    <Box sx={{
+      minHeight: '100vh', minWidth: '100vw',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: 'linear-gradient(135deg, #232526 0%, #5f0a87 100%)',
+      overflow: 'auto',
+    }}>
+      <Paper elevation={6} sx={paperSx}>
+        {/* ENCABEZADO */}
+        <Typography variant="h5" align="center" sx={{ color: '#a4508b', fontWeight: 'bold', letterSpacing: 1 }}>
+          Pregunta {currentQuestion + 1} de {questions.length}
+        </Typography>
+        <Typography variant="h6" align="center" sx={{ color: '#ff8c00', fontWeight: 600, mb: 1 }}>
+          {questions[currentQuestion].question}
+        </Typography>
+
+        {/* OPCIONES */}
+        <FormControl component="fieldset" sx={{ width: '100%', mt: 2 }}>
+          <RadioGroup
+            value={answers[currentQuestion]}
+            onChange={(e) => handleAnswerChange(e.target.value)}
+            sx={radioSx}
           >
-            Realizar Test Nuevamente
+            {questions[currentQuestion].options.map((option) => (
+              <FormControlLabel
+                key={option}
+                value={option}
+                control={<Radio />}
+                label={option}
+                sx={{
+                  mx: 0, my: 0.5, px: 2,
+                  borderRadius: 2, background: '#fff', fontWeight: 500,
+                  transition: 'background 0.2s, box-shadow 0.2s',
+                  '&:hover': {
+                    background: 'rgba(255,140,0,0.08)',
+                    boxShadow: '0 2px 8px rgba(255,140,0,0.10)',
+                  },
+                }}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+
+        {/* BOTÓN SIGUIENTE / VER RECOMENDACIONES */}
+        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+          <Button
+            variant="contained"
+            onClick={handleNext}
+            disabled={!answers[currentQuestion]}
+            sx={buttonSx}
+          >
+            {currentQuestion === questions.length - 1
+              ? 'Ver recomendaciones'
+              : 'Siguiente pregunta'}
           </Button>
-        </Paper>
-      ) : (
-        <Paper elevation={6} sx={paperSx}>
-          <Typography variant="h5" gutterBottom align="center" sx={{ color: '#a4508b', fontWeight: 'bold', letterSpacing: 1 }}>
-            Pregunta {currentQuestion + 1} de {questions.length}
-          </Typography>
-          <Typography variant="h6" gutterBottom align="center" sx={{ color: '#ff8c00', fontWeight: 600 }}>
-            {questions[currentQuestion].question}
-          </Typography>
-          <FormControl component="fieldset" sx={{ width: '100%', mt: 2 }}>
-            <RadioGroup
-              value={answers[currentQuestion]}
-              onChange={(e) => handleAnswerChange(e.target.value)}
-              sx={radioSx}
-            >
-              {questions[currentQuestion].options.map((option, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={option}
-                  control={<Radio />}
-                  label={option}
-                  sx={{
-                    mx: 0,
-                    my: 0.5,
-                    px: 2,
-                    borderRadius: 2,
-                    background: '#fff',
-                    fontWeight: 500,
-                    transition: 'background 0.2s, box-shadow 0.2s',
-                    '&:hover': {
-                      background: 'rgba(255,140,0,0.08)',
-                      boxShadow: '0 2px 8px rgba(255,140,0,0.10)',
-                    },
-                  }}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
-          <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-            <Button
-              variant="contained"
-              onClick={handleNext}
-              disabled={!answers[currentQuestion]}
-              sx={buttonSx}
-            >
-              {currentQuestion === questions.length - 1 ? 'Ver Resultados' : 'Siguiente Pregunta'}
-            </Button>
-          </Box>
-        </Paper>
-      )}
+        </Box>
+      </Paper>
     </Box>
   );
 }
