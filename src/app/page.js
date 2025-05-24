@@ -45,13 +45,13 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col gap-4 w-full max-w-md mb-16">
-              <Link href="/login" className="transform hover:scale-105 transition duration-300">
+              <Link href="/signin" className="transform hover:scale-105 transition duration-300">
                 <button className="w-full py-4 px-6 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg hover:from-purple-700 hover:to-pink-700 shadow-lg shadow-purple-500/30">
                   Iniciar Sesión
                 </button>
               </Link>
               
-              <Link href="/register" className="transform hover:scale-105 transition duration-300">
+              <Link href="/signup" className="transform hover:scale-105 transition duration-300">
                 <button className="w-full py-4 px-6 rounded-lg bg-gradient-to-r from-pink-600 to-red-600 text-white font-bold text-lg hover:from-pink-700 hover:to-red-700 shadow-lg shadow-pink-500/30">
                   Registrarse
                 </button>
