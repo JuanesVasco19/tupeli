@@ -56,7 +56,8 @@ export default function Test() {
     background: 'rgba(255,255,255,0.92)',
     backdropFilter: 'blur(6px)',
     border: '1px solid #ececec',
-    minWidth: 340,
+    width: 420,
+    maxWidth: '90vw',
     transition: 'box-shadow 0.3s',
     '&:hover': {
       boxShadow: '0 12px 40px 0 rgba(31, 38, 135, 0.30)',
