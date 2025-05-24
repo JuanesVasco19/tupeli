@@ -97,7 +97,7 @@ export default function SignIn() {
           <div className="mt-6 text-center text-gray-300">
             ¿No tienes una cuenta?{" "}
             <Link
-              href="/register"
+              href="/signup"
               className="text-pink-400 hover:underline font-semibold"
             >
               Regístrate
