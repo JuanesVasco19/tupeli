@@ -27,7 +27,7 @@ export default function FeedbackPage() {
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        setMovies(data);
+        setMovies(data.results);
       } catch (err) {
         setError('No se pudieron obtener recomendaciones.');
         console.error(err);
