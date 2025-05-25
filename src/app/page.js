@@ -80,7 +80,7 @@ export default function Home() {
                 <p className="text-gray-400">Recomendaciones únicas basadas en tus preferencias</p>
               </div>
               
-              <div className="text-center p-8 rounded-xl bg-gradient-to-b from-pink-900/50 to-pink-800/30 backdrop-blur-sm border border-pink-700/30 shadow-lg transform hover:scale-105 transition duration-300">
+              <Link href="/discover" className="text-center p-8 rounded-xl bg-gradient-to-b from-pink-900/50 to-pink-800/30 backdrop-blur-sm border border-pink-700/30 shadow-lg transform hover:scale-105 transition duration-300 cursor-pointer block">
                 <div className="relative w-16 h-16 mx-auto mb-4">
                   <Image
                     src="/movie-discovery.png"
@@ -92,7 +92,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-pink-300">Descubre</h3>
                 <p className="text-gray-400">Encuentra nuevas películas cada día</p>
-              </div>
+              </Link>
               
               <div className="text-center p-8 rounded-xl bg-gradient-to-b from-red-900/50 to-red-800/30 backdrop-blur-sm border border-red-700/30 shadow-lg transform hover:scale-105 transition duration-300">
                 <div className="relative w-16 h-16 mx-auto mb-4">
