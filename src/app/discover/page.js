@@ -36,6 +36,7 @@ export default function DiscoverPage() {
           <MovieCard
             key={m.id}
             movie={{
+              id:    m.id,
               title:  m.title,
               poster: m.poster_path ? `${IMAGE_BASE}${m.poster_path}` : '/fallback.jpg',
               genre:  [],

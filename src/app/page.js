@@ -66,7 +66,7 @@ export default function Home() {
 
             {/* Características */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="text-center p-8 rounded-xl bg-gradient-to-b from-purple-900/50 to-purple-800/30 backdrop-blur-sm border border-purple-700/30 shadow-lg transform hover:scale-105 transition duration-300">
+              <div className="text-center p-8 rounded-xl bg-gradient-to-b from-purple-900/50 to-purple-800/30 backdrop-blur-sm border border-purple-700/30 shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:border-purple-400/60 hover:bg-purple-900/60 cursor-pointer">
                 <div className="relative w-16 h-16 mx-auto mb-4">
                   <Image
                     src="/ai-brain.png"
@@ -80,7 +80,7 @@ export default function Home() {
                 <p className="text-gray-400">Recomendaciones únicas basadas en tus preferencias</p>
               </div>
               
-              <Link href="/discover" className="text-center p-8 rounded-xl bg-gradient-to-b from-pink-900/50 to-pink-800/30 backdrop-blur-sm border border-pink-700/30 shadow-lg transform hover:scale-105 transition duration-300 cursor-pointer block">
+              <Link href="/discover" className="text-center p-8 rounded-xl bg-gradient-to-b from-pink-900/50 to-pink-800/30 backdrop-blur-sm border border-pink-700/30 shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:border-pink-400/60 hover:bg-pink-900/60 cursor-pointer block">
                 <div className="relative w-16 h-16 mx-auto mb-4">
                   <Image
                     src="/movie-discovery.png"
@@ -94,7 +94,7 @@ export default function Home() {
                 <p className="text-gray-400">Encuentra nuevas películas cada día</p>
               </Link>
               
-              <div className="text-center p-8 rounded-xl bg-gradient-to-b from-red-900/50 to-red-800/30 backdrop-blur-sm border border-red-700/30 shadow-lg transform hover:scale-105 transition duration-300">
+              <div className="text-center p-8 rounded-xl bg-gradient-to-b from-red-900/50 to-red-800/30 backdrop-blur-sm border border-red-700/30 shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:border-red-400/60 hover:bg-red-900/60 cursor-pointer">
                 <div className="relative w-16 h-16 mx-auto mb-4">
                   <Image
                     src="/save-movie.png"
