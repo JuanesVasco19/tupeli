@@ -21,7 +21,7 @@ export default function SignIn() {
       return;
     }
     console.log(result);
-    return router.push("/cartas");
+    return router.push("/Test");
   };
 
   return (
