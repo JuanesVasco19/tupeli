@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Button, Radio, RadioGroup, FormControlLabel, FormControl, Typography, Box, Paper } from '@mui/material';
 import MovieCard from '@/components/moviecard';
+import signOutUser from '../../../firebase/auth/signout';
 
 export default function Test() {
   const router = useRouter();
@@ -48,6 +49,13 @@ export default function Test() {
     } else {
       localStorage.setItem('movieQuiz', JSON.stringify(answers)); // persiste
       router.push('/feedback');    
+    }
+  };
+
+  const handleSignOut = async () => {
+    const { error } = await signOutUser();
+    if (!error) {
+      router.push('/signin');
     }
   };
 
@@ -105,6 +113,7 @@ export default function Test() {
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       background: 'linear-gradient(135deg, #232526 0%, #5f0a87 100%)',
       overflow: 'auto',
+      position: 'relative',
     }}>
       <Paper elevation={6} sx={paperSx}>
         {/* ENCABEZADO */}
@@ -156,6 +165,31 @@ export default function Test() {
           </Button>
         </Box>
       </Paper>
+
+      {/* Botón de cerrar sesión */}
+      <Button
+        onClick={handleSignOut}
+        sx={{
+          position: 'fixed',
+          bottom: 20,
+          right: 20,
+          background: 'linear-gradient(90deg, #ff4d4d 0%, #ff0000 100%)',
+          color: '#fff',
+          fontWeight: 'bold',
+          borderRadius: 2,
+          px: 2,
+          py: 1,
+          fontSize: '0.875rem',
+          boxShadow: '0 2px 8px rgba(255,0,0,0.2)',
+          transition: 'background 0.3s, transform 0.2s',
+          '&:hover': {
+            background: 'linear-gradient(90deg, #ff0000 0%, #ff4d4d 100%)',
+            transform: 'scale(1.04)',
+          },
+        }}
+      >
+        Cerrar Sesión
+      </Button>
     </Box>
   );
 }
