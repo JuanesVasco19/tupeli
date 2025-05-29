@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-      {/* Hero Section */}
+      {/* Hero Sectio */}
       <div className="min-h-screen relative">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
